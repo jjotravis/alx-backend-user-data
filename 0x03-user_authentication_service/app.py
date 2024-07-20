@@ -68,19 +68,20 @@ def profile():
     Retrieve user id
     """
     session_id = request.cookies.get("session_id")
-    user = AUTH.get_user_from_session_id(session_id=session_id)
+    user = AUTH.get_user_from_session_id(session_id)
     if user:
         return jsonify({"email": user.email}), 200
     else:
         abort(403)
 
-@app.route('/reset_password', methods=['POST'], strict_slashes=False)
+
+@app.route("/reset_password", methods=["POST"], strict_slashes=False)
 def get_reset_password_token() -> str:
-    """ POST /reset_password
-      Return:
-        - message
+    """POST /reset_password
+    Return:
+      - message
     """
-    email = request.form.get('email')
+    email = request.form.get("email")
     user = AUTH.create_session(email)
     if not user:
         abort(403)
